@@ -22,12 +22,12 @@ import (
 const usage = `Convert jpg/jpeg/png images in a folder to jpg or webp.
 
 Usage:
-  optimize-images <folder> [-q QUALITY] [-r] [--delete-originals] [--format jpg|webp]
+  optimize-images <folder> [-q QUALITY] [-r] [--replace] [--format jpg|webp]
 
 Options:
   -q QUALITY           Output quality 0-100 (default: 85)
   -r                    Recurse into subfolders (default: top-level only)
-  --delete-originals    Remove the source file after a successful conversion
+  --replace             Remove the source file after a successful conversion
   --format FORMAT       Output format: jpg (default, pure Go, no external
                         deps) or webp (shells out to cwebp; keeps transparency
                         that jpg would otherwise flatten away)
@@ -37,16 +37,16 @@ A source file already in the target format (e.g. a .jpg/.jpeg file when
 
 Examples:
   optimize-images img
-  optimize-images img/screen-shots -q 90 -r --delete-originals
+  optimize-images img/screen-shots -q 90 -r --replace
   optimize-images img/infographics --format webp
 `
 
 type config struct {
-	folder          string
-	quality         int
-	recursive       bool
-	deleteOriginals bool
-	format          string
+	folder    string
+	quality   int
+	recursive bool
+	replace   bool
+	format    string
 }
 
 var sourceExts = map[string]bool{".jpg": true, ".jpeg": true, ".png": true}
@@ -72,8 +72,8 @@ func parseArgs(args []string) (config, error) {
 			cfg.quality = q
 		case "-r":
 			cfg.recursive = true
-		case "--delete-originals":
-			cfg.deleteOriginals = true
+		case "--replace":
+			cfg.replace = true
 		case "--format":
 			i++
 			if i >= len(args) {
@@ -245,7 +245,7 @@ func run(cfg config) error {
 		}
 		fmt.Printf("%s: %d -> %d bytes (%.0f%% smaller)\n", src, before, after, pct)
 
-		if cfg.deleteOriginals {
+		if cfg.replace {
 			if err := os.Remove(src); err != nil {
 				fmt.Fprintf(os.Stderr, "Error deleting %s: %v\n", src, err)
 			}

@@ -24,15 +24,15 @@ go install github.com/HiteshSahu/optimize-images@latest
 ## Usage
 
 ```
-optimize-images <folder> [-q QUALITY] [-r] [--delete-originals] [--format jpg|webp]
+optimize-images <folder> [-q QUALITY] [-r] [--replace] [--format jpg|webp]
 ```
 
-| Flag                 | Meaning                                              |
-|----------------------|------------------------------------------------------|
-| `-q QUALITY`         | Output quality 0-100 (default: 85)                   |
-| `-r`                 | Recurse into subfolders (default: top-level only)    |
-| `--delete-originals` | Remove the source file after a successful conversion |
-| `--format jpg\|webp` | Output format (default: jpg)                         |
+| Flag                 | Meaning                                              | Default              |
+|----------------------|------------------------------------------------------|----------------------|
+| `--format jpg\|webp` | Output format                                        | `jpg`                |
+| `-q <QUALITY>`       | Output quality 0-100                                 | `85`                 |
+| `-r`                 | Recurse into subfolders                              | off (top-level only) |
+| `--replace`          | Remove the source file after a successful conversion | off                  |
 
 A source file already in the target format (e.g. a `.jpg`/`.jpeg` file when
 `--format=jpg`) is left alone — it's not re-encoded or duplicated.
@@ -46,8 +46,17 @@ say) belongs in webp, not jpg.
 
 ## Examples
 
+
 ```bash
-optimize-images img
-optimize-images img/screen-shots -q 90 -r --delete-originals
+# Recursively optimize all images in the `img` folder, outputting to `jpg` at quality 85
+optimize-images img -r
+
+# Optimize all images at root level in the `img` folder, outputting to `jpg` at quality 90
+optimize-images img -q 90 
+
+# Recursively optimize& replace all images in `img` folder, with jpg quality 90
+optimize-images img/screen-shots -q 90 -r --replace
+
+# Optimize all images in the `img` folder, outputting to `webp` keping original images
 optimize-images img/infographics --format webp
 ```
