@@ -1,15 +1,16 @@
 # Optimize Images
+[![🖼️ CI](https://github.com/hiteshsahu/optimize-images/actions/workflows/ci.yml/badge.svg)](https://github.com/hiteshsahu/optimize-images/actions/workflows/ci.yml)
+[![🚀 Release](https://github.com/hiteshsahu/optimize-images/actions/workflows/release.yml/badge.svg)](https://github.com/hiteshsahu/optimize-images/actions/workflows/release.yml)
 
 A small CLI that shrinks jpg/jpeg/png images in a folder by re-encoding them
 as **jpg** (pure Go, no external tools) or **webp** (shells out to `cwebp`,
 since Go's standard library has no WebP encoder).
 
-Started as a bash script (`optimize-images.sh`, two slightly different copies
-floating around in other repos — one jpg-only, one webp-only); this unifies
-both behind one `--format` flag and fixes the one real bug both bash versions
-had: re-running them over a folder that mixes `.jpg`/`.jpeg` files would
-happily produce a same-content duplicate under the other extension. This
-version treats `.jpg`/`.jpeg` as already-jpg and skips them outright.
+### Why this tool?
+
+It is a tedious task to optimize screenshots &  images generated from OpenAI's DALL·E or Midjourney, and this tool is meant to automate that process.
+
+This tool is not meant to be a replacement for professional image optimization tools like ImageMagick or Photoshop, but rather a quick and easy way to reduce the size of images in bulk.
 
 ## Install
 
