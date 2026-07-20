@@ -12,14 +12,32 @@ It is a tedious task to optimize screenshots &  images generated from OpenAI's D
 
 This tool is not meant to be a replacement for professional image optimization tools like ImageMagick or Photoshop, but rather a quick and easy way to reduce the size of images in bulk.
 
+---
+
 ## Install
 
 ```bash
-go build -o optimize-images .
+go build -o w .
 
 # or, once pushed to GitHub:
 go install github.com/HiteshSahu/optimize-images@latest
 ```
+
+### Troubleshooting
+
+If you face: **zsh: command not found: optimize-images**
+
+Add this to `~/.zshrc`
+
+```bash
+# Add this and save the file
+export PATH="$HOME/go/bin:$PATH"
+
+# source the file to apply changes
+source ~/.zshrc
+```
+
+---
 
 ## Usage
 
@@ -44,8 +62,7 @@ a white background before encoding.
 (via `cwebp`), which is why an image meant to sit on any background (a logo,
 say) belongs in webp, not jpg.
 
-## Examples
-
+### Examples
 
 ```bash
 # Recursively optimize all images in the `img` folder, outputting to `jpg` at quality 85
